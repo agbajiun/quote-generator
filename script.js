@@ -7,6 +7,21 @@ const newQuoteBtn = document.getElementById('new-quote');
 const newVerseBtn = document.getElementById('new-verse');
 const bibleRef = document.getElementById('bible');
 const verseText = document.getElementById('verse');
+const loader = document.getElementById('loader');
+
+// Show loading
+function loading() {
+    loader.hidden = false;
+    quoteContainer.hidden = true;
+}
+
+//Hide Loading
+function complete() {
+    if(!loader.hidden) {
+        quoteContainer.hidden = false;
+        loader.hidden = true;
+    }
+}
 
 // Get Quote from API using async fetch method
 async function getQuote() {
@@ -30,6 +45,7 @@ async function getQuote() {
             quoteText.classList.remove('long-quote')
         }
         quoteText.innerText = data.quoteText;
+        
     }  catch (error) {
         getQuote();
         //console.log("Whoops! no quote", error);
@@ -37,6 +53,9 @@ async function getQuote() {
 }
 //Get bible verse from API
 async function getBibleVerse() {
+    //Show Loader
+    loading();
+    
     //Adding a proxy url to help get through the CORs policy error
     const proxyUrl = 'https://morning-waters-31503.herokuapp.com/'
     const apiUrl ='https://labs.bible.org/api/?passage=random&type=json';
@@ -55,7 +74,8 @@ async function getBibleVerse() {
         } else {
             verseText.classList.remove('long-quote')
         }
-        //quoteText.innerText = data.quoteText;
+        //Stop loader
+        complete();
     }  catch (error) {
         getBibleVerse();
         console.log("Whoops! no quote", error);
