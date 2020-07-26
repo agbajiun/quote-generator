@@ -55,7 +55,7 @@ async function getQuote() {
 async function getBibleVerse() {
     //Show Loader
     loading();
-    
+
     //Adding a proxy url to help get through the CORs policy error
     const proxyUrl = 'https://morning-waters-31503.herokuapp.com/'
     const apiUrl ='https://labs.bible.org/api/?passage=random&type=json';
@@ -63,11 +63,11 @@ async function getBibleVerse() {
         const response = await fetch(proxyUrl + apiUrl);
         const data = await response.json();
         const results = data[0];
-        console.log(results);
         let ref = results.bookname + " " + results.chapter + ":" + results.verse;
-        console.log("ref", ref);
+  
         bibleRef.innerHTML = ref;
         verseText.innerText = results.text;
+        
         //Reduce font size for long quote
         if(results.text.length > 120){
             verseText.classList.add('long-quote');
