@@ -26,7 +26,7 @@ body {
     box-shadow: 0 10px 10px 10px rgba(0, 0, 0, 0.2);
 }
 
-.quote-text, .verse-text {
+.verse-text {
     font-size: 2.75rem;
 }
 
@@ -38,7 +38,7 @@ body {
     font-size: 4rem;
 }
 
-.quote-author, .bible-author {
+.bible-author {
     margin-top: 15px;
     font-size: 2rem;
     font-weight: 400;
@@ -106,7 +106,7 @@ button:active {
         margin: auto 10px;
     }
 
-    .quote-text {
+    .verse-text {
         font-size: 2.5rem;
     }
 }
