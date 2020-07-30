@@ -3,6 +3,7 @@ const googleBtn = document.getElementById('google');
 const newVerseBtn = document.getElementById('new-verse');
 const bibleRef = document.getElementById('bible');
 const verseText = document.getElementById('verse');
+const bibleVersion = document.getElementById('bible-version');
 const loader = document.getElementById('loader');
 
 function showLoadingSpinner() {
@@ -24,18 +25,22 @@ async function getBibleVerse() {
 
     //Adding a proxy url to help get through the CORs policy error
     const proxyUrl = 'https://morning-waters-31503.herokuapp.com/'
-    const apiUrl ='https://labs.bible.org/api/?passage=random&type=json';
+    //const apiUrl ='https://labs.bible.org/api/?passage=random&type=json';
+    const apiUrl = 'http://www.ourmanna.com/verses/api/get?format=json&order=random';
     try {
         const response = await fetch(proxyUrl + apiUrl);
         const data = await response.json();
-        const results = data[0];
-        let ref = results.bookname + " " + results.chapter + ":" + results.verse;
+        
+        const results = data.verse;
+        console.log(results);
+        // let ref = results.bookname + " " + results.chapter + ":" + results.verse;
   
-        bibleRef.innerHTML = ref;
-        verseText.innerText = results.text;
+        bibleRef.innerHTML = results.details.reference;
+        verseText.innerText = results.details.text;
+        bibleVersion.innerText = results.details.version;
 
         //Reduce font size for long quote
-        if(results.text.length > 120){
+        if(results.details.text.length > 120){
             verseText.classList.add('long-quote');
         } else {
             verseText.classList.remove('long-quote')
@@ -43,7 +48,7 @@ async function getBibleVerse() {
         //Stop loader
         removeLoadingSpinner();
     }  catch (error) {
-        getBibleVerse();
+        //getBibleVerse();
         console.log("Whoops! no quote", error);
     }
 }
