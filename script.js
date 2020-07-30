@@ -48,7 +48,7 @@ async function getBibleVerse() {
         //Stop loader
         removeLoadingSpinner();
     }  catch (error) {
-        //getBibleVerse();
+        getBibleVerse();
         console.log("Whoops! no quote", error);
     }
 }
@@ -66,7 +66,10 @@ function tweetVerse() {
 function addToGoogleCalendar() {
     const verse = bibleRef.innerText;
     const text = verseText.innerText;
-    const googleCalendarUrl = `https://calendar.google.com/calendar/r/eventedit?text=${verse} - ${text}`;
+    const fullVerse = verse +" - "+ text;
+    const today = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+    //const googleCalendarUrl = `https://calendar.google.com/calendar/r/eventedit?text=${verse} - ${text}`;
+    const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${fullVerse}&dates=${today}`;
     window.open(googleCalendarUrl, '_blank');
 }
 
