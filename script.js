@@ -1,10 +1,12 @@
 const quoteContainer = document.getElementById('quote-container');
 const googleBtn = document.getElementById('google');
+const googleCalendar = document.getElementById('google-calendar');
 const newVerseBtn = document.getElementById('new-verse');
 const bibleRef = document.getElementById('bible');
 const verseText = document.getElementById('verse');
 const bibleVersion = document.getElementById('bible-version');
 const loader = document.getElementById('loader');
+//const dateControl = '';
 
 function showLoadingSpinner() {
     loader.hidden = false;
@@ -68,14 +70,18 @@ function addToGoogleCalendar() {
     const text = verseText.innerText;
     const fullVerse = verse +" - "+ text;
     const today = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+    const dateControl = document.querySelector('input[type="datetime-local"]');
+    const dateTime = dateControl.value.replace(/-/g, '');
+    const newDateTime = dateTime.replace(/:/g, '')+"00";
+     
     //const googleCalendarUrl = `https://calendar.google.com/calendar/r/eventedit?text=${verse} - ${text}`;
-    const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${fullVerse}&dates=${today}`;
+    const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${fullVerse}&dates=${newDateTime}%2F${newDateTime}`;
     window.open(googleCalendarUrl, '_blank');
 }
 
 //Event listeners
 newVerseBtn.addEventListener('click', getBibleVerse);
-googleBtn.addEventListener('click', addToGoogleCalendar);
+googleCalendar.addEventListener('click', addToGoogleCalendar);
 
 //On Load
 getBibleVerse();
